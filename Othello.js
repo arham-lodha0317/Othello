@@ -22,6 +22,7 @@ class Othello {
     this.turn = 1;
 
     this.legalMoves = this.getLegalMoves();
+    this.score = this.calculateScore();
   }
 
   drawGameboard = () => {
@@ -178,6 +179,8 @@ class Othello {
     captured.forEach((element) => {
       this.gameboard[element[0]][element[1]] = this.turn;
     });
+
+    this.score = this.calculateScore();
   };
 
   getCaptured = (x, y, dx, dy) => {
@@ -208,7 +211,29 @@ class Othello {
     } else return [];
   };
 
+  calculateScore = () => {
+      let score = {"Black" : 0, "White" : 0}
+      for(let i = 0; i < this.gameboard.length; i++){
+          const arr = this.gameboard[i];
+          for(let j = 0; j < arr.length; j++){
+              const elem = arr[j];
+              if(elem == 1){
+                  score['Black']++;
+              }
+              else if(elem == 2){
+                  score['White']++;
+              }
+          }
+      }
+
+      return score;
+  }
+
   get getGameboard(){
       return this.gameboard
+  }
+
+  get getScore() {
+      return this.score;
   }
 }

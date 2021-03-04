@@ -2,6 +2,9 @@ let tile;
 let offset;
 let boardSize;
 let game;
+let whiteScore;
+let BlackScore;
+let score;
 
 function setup() {
   pixelDensity(2);
@@ -13,12 +16,20 @@ function setup() {
   tile = (width - 2 * offset) / boardSize;
 
   game = new Othello(boardSize, offset, tile);
+  score = game.score;
+  
+  whiteScore = createP("White Score : " + score['White']);
+  blackScore = createP("Black Score : " + score['Black']);
 }
 
 function draw() {
   background("#3b8e69");
   drawGrid();
   game.drawGameboard();
+
+  score = game.score;
+  whiteScore.html("White Score : " + score["White"]);
+  blackScore.html("Black Score : " + score["Black"]);
 }
 
 drawGrid = () => {
