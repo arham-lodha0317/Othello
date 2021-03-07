@@ -23,6 +23,7 @@ class Othello {
 
     this.legalMoves = this.getLegalMoves();
     this.score = this.calculateScore();
+    this.endgame = false;
   }
 
   drawGameboard = () => {
@@ -144,13 +145,32 @@ class Othello {
         this.gameboard[coord[0]][coord[1]] = this.turn;
         this.updateBoard(coord[1], coord[0]);
 
-        //change turns and get legal moves
+        
+
         this.turn = this.turn == 1 ? 2 : 1;
         this.legalMoves = this.getLegalMoves();
+
+        if(this.legalMoves.length == 0) {
+          this.endgame = true;
+        }
+        this.endgame = this.endGame();
         break;
       }
     }
   };
+
+  placePeiceAtIndex = (row, col) => {
+    this.gameboard[row][col] = this.turn;
+    this.updateBoard(col, row);
+
+    this.turn = this.turn == 1 ? 2 : 1;
+    this.legalMoves = this.getLegalMoves();
+
+    if (this.legalMoves.length == 0) {
+      this.endgame = true;
+    }
+    this.endgame = this.endGame();
+  }
 
   updateBoard = (x, y) => {
     let captured = [];
@@ -227,6 +247,20 @@ class Othello {
       }
 
       return score;
+  }
+
+  endGame = () => {
+    for (let i = 0; i < this.gameboard.length; i++) {
+      const arr = this.gameboard[i];
+      for (let j = 0; j < arr.length; j++) {
+        const e = arr[j];
+        if(e == 0){
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   get getGameboard(){

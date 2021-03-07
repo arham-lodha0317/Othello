@@ -5,6 +5,8 @@ let game;
 let whiteScore;
 let BlackScore;
 let score;
+let player;
+let restart;
 
 function setup() {
   pixelDensity(2);
@@ -20,6 +22,11 @@ function setup() {
   
   whiteScore = createP("White Score : " + score['White']);
   blackScore = createP("Black Score : " + score['Black']);
+
+  player = new RandomPlayer(game, 2);
+
+  restart = createButton("Restart game")
+  restart.mousePressed(restartGame)
 }
 
 function draw() {
@@ -30,6 +37,8 @@ function draw() {
   score = game.score;
   whiteScore.html("White Score : " + score["White"]);
   blackScore.html("Black Score : " + score["Black"]);
+
+  player.update();
 }
 
 drawGrid = () => {
@@ -51,3 +60,14 @@ mousePressed = () => {
     }
   }
 };
+
+restartGame = () => {
+  print("Game is Restarted");
+  game = new Othello(boardSize, offset, tile);
+  score = game.score;
+
+  whiteScore.html("White Score : " + score["White"]);
+  blackScore.html("Black Score : " + score["Black"]);
+
+  player = new RandomPlayer(game, 2);
+}
